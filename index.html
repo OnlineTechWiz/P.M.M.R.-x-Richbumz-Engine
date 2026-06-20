@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P.M.M.R x Richbumz Engine</title>
+    <style>
+        :root {
+            --bg-color: #0d0d12;
+            --panel-bg: #16161e;
+            --text-main: #e0e0e0;
+            --pain-accent: #ff4b4b;
+            --rich-accent: #ffd700;
+            --border-radius: 8px;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header-title {
+            text-align: center;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .header-title span.pain { color: var(--pain-accent); }
+        .header-title span.rich { color: var(--rich-accent); }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard { grid-template-columns: 1fr; }
+        }
+
+        .module {
+            background: var(--panel-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .module.protocol { border-top: 4px solid var(--pain-accent); }
+        .module.engine { border-top: 4px solid var(--rich-accent); }
+
+        h2 { margin-top: 0; font-size: 1.2rem; }
+        
+        label { display: block; margin-top: 15px; font-size: 0.9rem; color: #888; }
+        
+        input, textarea, select {
+            width: 100%;
+            background: #000;
+            color: #fff;
+            border: 1px solid #333;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus { outline: none; border-color: var(--rich-accent); }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .btn-pain { background: var(--pain-accent); color: #000; }
+        .btn-pain:hover { background: #d43f3f; }
+        
+        .btn-rich { background: var(--rich-accent); color: #000; }
+        .btn-rich:hover { background: #e6c200; }
+
+        .ledger {
+            max-width: 1000px;
+            width: 100%;
+            margin-top: 20px;
+            background: var(--panel-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            border-left: 4px solid #fff;
+        }
+
+        .asset-card {
+            background: #000;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--rich-accent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .asset-details { flex-grow: 1; }
+        .badge {
+            background: #333; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-title">
+        <h1><span class="pain">P.M.M.R.</span> x <span class="rich">RICHBUMZ</span></h1>
+        <p>The Pain-to-Profit Pipeline</p>
+    </div>
+
+    <div class="dashboard">
+        <!-- PMMR PROTOCOL MODULE -->
+        <div class="module protocol">
+            <h2>STEP 1: P.M.M.R. PROTOCOL</h2>
+            <p style="font-size: 0.8rem; color: #aaa;">Extract the raw data from the bottleneck.</p>
+            
+            <label>The Friction (What went wrong / The Struggle)</label>
+            <textarea id="painInput" rows="3" placeholder="e.g., Wasted 10 hours debugging a broken stencil layout..."></textarea>
+            
+            <label>The Alchemized Lesson (The Solution / Strategy)</label>
+            <textarea id="lessonInput" rows="3" placeholder="e.g., Created a modular template system to automate it..."></textarea>
+            
+            <button class="btn-pain" onclick="pushToEngine()">Extract to Engine &rarr;</button>
+        </div>
+
+        <!-- RICHBUMZ INCOME ENGINE MODULE -->
+        <div class="module engine">
+            <h2>STEP 2: RICHBUMZ INCOME ENGINE</h2>
+            <p style="font-size: 0.8rem; color: #aaa;">Package the lesson into an income-generating asset.</p>
+            
+            <label>Active Lesson Loaded:</label>
+            <input type="text" id="activeLesson" readonly placeholder="Waiting for PMMR extraction..." style="color: var(--rich-accent);">
+            
+            <label>Content Format</label>
+            <select id="contentFormat">
+                <option value="Short-Form Video (TikTok/Reel)">Short-Form Video (TikTok/Reel)</option>
+                <option value="Community Tool / Lead Magnet">Community Tool / Lead Magnet</option>
+                <option value="Long-Form Breakdown (YouTube)">Long-Form Breakdown (YouTube)</option>
+                <option value="Twitter/X Thread">Twitter/X Thread</option>
+            </select>
+
+            <label>The Hook / Title</label>
+            <input type="text" id="contentHook" placeholder="e.g., How losing 10 hours saved my business...">
+            
+            <button class="btn-rich" onclick="mintAsset()">Mint Content Asset &check;</button>
+        </div>
+    </div>
+
+    <!-- LEDGER -->
+    <div class="ledger">
+        <h2>THE ASSET LEDGER</h2>
+        <p style="font-size: 0.8rem; color: #aaa;">Your finalized content pieces ready for deployment.</p>
+        <div id="ledgerList"></div>
+    </div>
+
+    <script>
+        let pendingLesson = "";
+
+        // Push data from Protocol to Engine
+        function pushToEngine() {
+            const pain = document.getElementById('painInput').value;
+            const lesson = document.getElementById('lessonInput').value;
+            
+            if (!pain || !lesson) {
+                alert("You must define both the Pain and the Lesson to extract value.");
+                return;
+            }
+
+            pendingLesson = lesson;
+            document.getElementById('activeLesson').value = pendingLesson;
+            
+            // Visual feedback
+            document.getElementById('activeLesson').style.background = "#1a1a00";
+        }
+
+        // Mint the final asset and save to storage
+        function mintAsset() {
+            const format = document.getElementById('contentFormat').value;
+            const hook = document.getElementById('contentHook').value;
+            
+            if (!pendingLesson || !hook) {
+                alert("Extract a lesson first and write a hook before minting.");
+                return;
+            }
+
+            const asset = {
+                id: Date.now(),
+                date: new Date().toLocaleDateString(),
+                lesson: pendingLesson,
+                format: format,
+                hook: hook
+            };
+
+            let vault = JSON.parse(localStorage.getItem('richbumzVault') || '[]');
+            vault.unshift(asset);
+            localStorage.setItem('richbumzVault', JSON.stringify(vault));
+
+            // Clear forms
+            document.getElementById('painInput').value = '';
+            document.getElementById('lessonInput').value = '';
+            document.getElementById('activeLesson').value = '';
+            document.getElementById('contentHook').value = '';
+            pendingLesson = "";
+
+            renderLedger();
+        }
+
+        // Display the assets
+        function renderLedger() {
+            const list = document.getElementById('ledgerList');
+            const vault = JSON.parse(localStorage.getItem('richbumzVault') || '[]');
+            
+            if (vault.length === 0) {
+                list.innerHTML = "<p style='color: #555;'>No assets minted yet. Run the protocol.</p>";
+                return;
+            }
+
+            list.innerHTML = vault.map(asset => `
+                <div class="asset-card">
+                    <div class="asset-details">
+                        <span class="badge">${asset.format}</span> 
+                        <strong style="color: var(--rich-accent);">${asset.hook}</strong>
+                        <div style="font-size: 0.8rem; color: #aaa; margin-top: 8px;">
+                            <strong>Core Value:</strong> ${asset.lesson}
+                        </div>
+                    </div>
+                    <div style="font-size: 0.8rem; color: #555;">${asset.date}</div>
+                </div>
+            `).join('');
+        }
+
+        // Load ledger on start
+        renderLedger();
+    </script>
+</body>
+</html>
